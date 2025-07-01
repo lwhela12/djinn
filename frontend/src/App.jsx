@@ -1,6 +1,7 @@
 import React from 'react';
-import { BrowserRouter, Routes, Route, Navigate, useParams } from 'react-router-dom';
-import { AuthProvider, useAuth } from './context/AuthContext';
+import { BrowserRouter, Routes, Route, Navigate, Outlet, useParams } from 'react-router-dom';
+import { AuthProvider } from './context/AuthContext';
+import { useAuth } from './hooks/useAuth';
 import Login from './components/Auth/Login';
 import Signup from './components/Auth/Signup';
 import Header from './components/Layout/Header';
@@ -21,17 +22,14 @@ function ChatWrapper() {
   return <ChatInterface sessionId={sessionId} />;
 }
 
-function MainLayout() {
+function Layout() {
   return (
     <div className="flex h-screen">
       <Sidebar />
       <div className="flex-1 flex flex-col">
         <Header />
         <main className="p-4 flex-1">
-          <Routes>
-            <Route index element={<Welcome />} />
-            <Route path="sessions/:sessionId" element={<ChatWrapper />} />
-          </Routes>
+          <Outlet />
         </main>
       </div>
     </div>
@@ -45,14 +43,11 @@ export default function App() {
         <Routes>
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
-          <Route
-            path="/*"
-            element={
-              <RequireAuth>
-                <MainLayout />
-              </RequireAuth>
-            }
-          />
+          <Route path="/" element={<RequireAuth><Layout /></RequireAuth>}>
+            <Route index element={<Welcome />} />
+            <Route path="sessions/:sessionId" element={<ChatWrapper />} />
+          </Route>
+          <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </BrowserRouter>
     </AuthProvider>

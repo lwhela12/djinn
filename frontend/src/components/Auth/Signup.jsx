@@ -8,13 +8,17 @@ export default function Signup() {
   const { signup } = useAuth();
   const navigate = useNavigate();
 
+  const [error, setError] = useState(null);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setError(null);
     try {
       await signup(email, password);
       navigate('/');
     } catch (err) {
-      console.error(err);
+      const msg = err.response?.data?.message || err.message;
+      setError(msg);
     }
   };
 
@@ -26,6 +30,7 @@ export default function Signup() {
         <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} className="p-2 border rounded" />
         <button type="submit" className="p-2 bg-blue-600 text-white rounded">Sign Up</button>
       </form>
+      {error && <div className="mt-2 text-red-600">{error}</div>}
       <p className="mt-4 text-sm">
         Already have an account?{' '}
         <Link to="/login" className="text-blue-600 hover:underline">

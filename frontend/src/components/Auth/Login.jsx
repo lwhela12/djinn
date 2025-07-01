@@ -8,13 +8,17 @@ export default function Login() {
   const { login } = useAuth();
   const navigate = useNavigate();
 
+  const [error, setError] = useState(null);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setError(null);
     try {
       await login(email, password);
       navigate('/');
     } catch (err) {
-      console.error(err);
+      const msg = err.response?.data?.message || err.message;
+      setError(msg);
     }
   };
 
@@ -26,6 +30,7 @@ export default function Login() {
         <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} className="p-2 border rounded" />
         <button type="submit" className="p-2 bg-green-600 text-white rounded">Login</button>
       </form>
+      {error && <div className="mt-2 text-red-600">{error}</div>}
       <p className="mt-4 text-sm">
         Don't have an account?{' '}
         <Link to="/signup" className="text-blue-600 hover:underline">

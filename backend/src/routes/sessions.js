@@ -27,6 +27,10 @@ router.post('/', async (req, res, next) => {
     const session = await prisma.session.create({
       data: { userId: req.user.id, title: req.body.title },
     });
+    // Seed initial AI prompt for new manifestation session
+    await prisma.message.create({
+      data: { sessionId: session.id, role: 'assistant', content: 'What do you want?' },
+    });
     res.status(201).json(session);
   } catch (err) {
     next(err);

@@ -5,7 +5,7 @@ const dotenv = require('dotenv');
 dotenv.config();
 
 const app = express();
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 5002;
 
 app.use(cors());
 app.use(express.json());
@@ -27,35 +27,12 @@ app.use((err, req, res, next) => {
   res.status(500).json({ message: err.message, stack: process.env.NODE_ENV === 'development' ? err.stack : undefined });
 });
 
-// Attempt to listen, with auto‑fallback to next ports if busy
-const basePort = parseInt(process.env.PORT, 10) || 5000;
-let currentPort = basePort;
-let listener;
-const maxRetries = 3;
-let retries = 0;
-
-function handleListenError(err) {
-  if ((err.code === 'EADDRINUSE' || err.code === 'EPERM') && retries < maxRetries) {
-    console.warn(`Port ${currentPort} in use, trying ${currentPort + 1}...`);
-    retries += 1;
-    currentPort += 1;
-    startServer();
-  } else {
-    console.error(err);
-    process.exit(1);
-  }
-}
-
-function startServer() {
-  try {
-    listener = app.listen(currentPort, () => {
-      console.log(`Server running on port ${currentPort}`);
-    });
-  } catch (err) {
-    handleListenError(err);
-    return;
-  }
-  listener.on('error', handleListenError);
-}
-
-startServer();
+// Start the server on the configured PORT
+const server = app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});
+server.on('error', (err) => {
+  console.error('Server failed to start:', err);
+  console.error(`Make sure port ${PORT} is free or set PORT env to another value.`);
+  process.exit(1);
+});

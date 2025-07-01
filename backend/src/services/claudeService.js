@@ -27,6 +27,7 @@ async function sendMessage(messages) {
     headers: {
       'Content-Type': 'application/json',
       'X-API-Key': process.env.CLAUDE_API_KEY,
+      'Anthropic-Version': process.env.CLAUDE_API_VERSION || '2024-11-08',
     },
     body: JSON.stringify({
       model: MODEL,
