@@ -89,6 +89,10 @@ router.patch('/:id', async (req, res, next) => {
 router.delete('/:id', async (req, res, next) => {
   const id = Number(req.params.id);
   try {
+    // Delete associated messages first due to foreign key constraints
+    await prisma.message.deleteMany({
+      where: { sessionId: id },
+    });
     const deleted = await prisma.session.deleteMany({
       where: { id, userId: req.user.id },
     });

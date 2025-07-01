@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
-import { getSessions, createSession } from '../../services/api';
+import { getSessions, createSession, deleteSession } from '../../services/api';
+import SessionItem from './SessionItem';
 
 export default function SessionList() {
   const [sessions, setSessions] = useState([]);
@@ -22,8 +23,21 @@ export default function SessionList() {
 
   const handleNew = async () => {
     try {
-      const data = await createSession('');
+      const data = await createSession('New Manifestation');
+      console.log('New session created:', data);
       navigate(`/sessions/${data.id}`);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const handleDelete = async (sessionId) => {
+    try {
+      await deleteSession(sessionId);
+      fetchSessions(); // Refresh the list after deletion
+      if (pathname === `/sessions/${sessionId}`) {
+        navigate('/sessions'); // Navigate away if the deleted session was active
+      }
     } catch (err) {
       console.error(err);
     }
@@ -40,14 +54,7 @@ export default function SessionList() {
       <ul className="overflow-auto flex-1">
         {sessions.map((session) => (
           <li key={session.id} className="mb-2">
-            <Link
-              to={`/sessions/${session.id}`}
-              className={`block p-2 rounded hover:bg-gray-200 ${
-                pathname === `/sessions/${session.id}` ? 'bg-gray-300' : ''
-              }`}
-            >
-              {session.title || 'Untitled'}
-            </Link>
+            <SessionItem session={session} onDelete={handleDelete} />
           </li>
         ))}
       </ul>
