@@ -15,9 +15,10 @@ export default function ChatInterface({ sessionId }) {
 
 
   return (
-    <div className="flex flex-col h-full bg-white rounded shadow">
-      <div className="p-4 border-b border-gray-200">
-        <h2 className="text-lg font-semibold">{sessionTitle}</h2>
+    <div className="flex-1 flex flex-col relative">
+      <div className="mystical-bg" />
+      <div className="p-4">
+        <h2 className="font-accent text-xl text-ethereal-gold">{sessionTitle}</h2>
       </div>
       <div className="flex-1 overflow-auto p-4 space-y-2">
         {messages.map((msg) => (
@@ -30,7 +31,7 @@ export default function ChatInterface({ sessionId }) {
         onChange={setInputValue}
         onSend={() => {
           sendMessage(inputValue);
-          setInputValue(''); // Clear the input immediately
+          setInputValue('');
         }}
         disabled={isLoading}
       />

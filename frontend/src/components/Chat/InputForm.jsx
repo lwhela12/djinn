@@ -2,24 +2,27 @@ import React from 'react';
 
 export default function InputForm({ value, onChange, onSend, disabled }) {
   return (
-    <div className="mt-auto p-2 border-t">
+    <div className="p-6">
       <form
         onSubmit={(e) => {
           e.preventDefault();
           onSend();
         }}
-        className="flex"
+        className="flex items-center space-x-2"
       >
-        <input
-          type="text"
-          className="flex-1 p-2 border rounded"
-          value={value}
-          onChange={(e) => onChange(e.target.value)}
-          disabled={disabled}
-        />
-        <button type="submit" className="ml-2 px-4 py-2 bg-blue-600 text-white rounded" disabled={disabled}>
-          Send
-        </button>
+        <div className="glass-panel p-4 flex-1 rounded-2xl flex items-center">
+          <input
+            type="text"
+            className="w-full bg-transparent text-moonlight placeholder-sage-mist focus:outline-none"
+            placeholder="Speak your desire into existence..."
+            value={value}
+            onChange={(e) => onChange(e.target.value)}
+            disabled={disabled}
+          />
+          <button type="submit" className="liquid-button ml-2 p-2" disabled={disabled}>
+            Send
+          </button>
+        </div>
       </form>
     </div>
   );

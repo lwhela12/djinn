@@ -1,3 +1,97 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&display=swap');
+
+:root {
+  --void-black: #0a0a0f;
+  --deep-earth: #1a1a23;
+  --mystic-charcoal: #2d2d3a;
+  --forest-shadow: #2c3e2d;
+  --amber-glow: #d4a574;
+  --sage-mist: #7a8471;
+  --ethereal-gold: #f4e4bc;
+  --moonlight: #e8e8f0;
+  --astral-blue: #4a5568;
+  --manifestation-green: #48bb78;
+  --warning-amber: #ed8936;
+  --error-crimson: #e53e3e;
+  --font-primary: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-accent: 'Cormorant Garamond', serif;
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.glass-panel {
+  background: rgba(42, 42, 58, 0.3);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(212, 165, 116, 0.1);
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.liquid-button {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(135deg, var(--amber-glow), var(--ethereal-gold));
+  border-radius: 12px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.liquid-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.6s;
+}
+
+.liquid-button:hover::before {
+  left: 100%;
+}
+
+.mystical-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background:
+    radial-gradient(circle at 20% 80%, rgba(212, 165, 116, 0.03) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(122, 132, 113, 0.03) 0%, transparent 50%),
+    radial-gradient(circle at 40% 40%, rgba(74, 85, 104, 0.02) 0%, transparent 50%);
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInFromLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes mysticalGlow {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(212, 165, 116, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 40px rgba(212, 165, 116, 0.6);
+  }
+}

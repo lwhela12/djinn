@@ -12,16 +12,20 @@ export default function Header() {
   };
 
   return (
-    <header className="p-4 bg-white border-b flex justify-between items-center">
-      <h1 className="text-2xl font-bold">Manifestation Journal</h1>
-      {user && (
-        <div className="flex items-center space-x-4">
-          <span className="text-sm text-gray-600">{user.email}</span>
-          <button onClick={handleLogout} className="text-sm text-red-600 hover:underline">
-            Logout
-          </button>
-        </div>
-      )}
+    <header className="fixed top-0 w-full z-50 glass-panel backdrop-blur-xl animate-slideInFromLeft">
+      <div className="flex items-center justify-between p-4">
+        <h1 className="font-accent text-2xl text-ethereal-gold animate-mysticalGlow">
+          Manifestation Journal
+        </h1>
+        {user && (
+          <div className="flex items-center space-x-4">
+            <span className="text-sm text-sage-mist">{user.email}</span>
+            <button onClick={handleLogout} className="text-sm text-error-crimson hover:underline">
+              Logout
+            </button>
+          </div>
+        )}
+      </div>
     </header>
   );
 }
