@@ -9,9 +9,21 @@ export default function ChatInterface({ sessionId }) {
   const endRef = useRef(null);
 
 
+  const messagesEndRef = useRef(null);
+  const chatContainerRef = useRef(null);
+  const [isAtBottom, setIsAtBottom] = useState(true);
+
   useEffect(() => {
-    endRef.current?.scrollIntoView({ behavior: 'smooth' });
-  }, [messages]);
+    if (isAtBottom) {
+      messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    }
+  }, [messages, isAtBottom]);
+
+  const handleScroll = () => {
+    const { scrollTop, scrollHeight, clientHeight } = chatContainerRef.current;
+    const atBottom = scrollHeight - scrollTop <= clientHeight + 1; // +1 for a small buffer
+    setIsAtBottom(atBottom);
+  };
 
 
   return (
@@ -20,11 +32,15 @@ export default function ChatInterface({ sessionId }) {
       <div className="p-4">
         <h2 className="font-accent text-xl text-ethereal-gold">{sessionTitle}</h2>
       </div>
-      <div className="flex-1 overflow-auto p-4 space-y-2">
+      <div
+        className="flex-1 overflow-auto p-4 space-y-2"
+        ref={chatContainerRef}
+        onScroll={handleScroll}
+      >
         {messages.map((msg) => (
           <MessageBubble key={msg.id} role={msg.role} content={msg.content} />
         ))}
-        <div ref={endRef} />
+        <div ref={messagesEndRef} />
       </div>
       <InputForm
         value={inputValue}

@@ -7,11 +7,7 @@ export default function MessageBubble({ role, content }) {
   const djinnClasses = 'self-start bg-deep-earth border border-amber-glow text-moonlight';
 
   return (
-
-    <div className={`${base} ${role === 'user' ? userClasses : djinnClasses}`}>
-
     <div className={`glass-panel p-3 my-1 rounded-xl max-w-md ${role === 'user' ? userClasses : djinnClasses}`}>
-
       {content}
     </div>
   );
