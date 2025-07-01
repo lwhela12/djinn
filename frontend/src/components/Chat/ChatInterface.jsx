@@ -27,13 +27,13 @@ export default function ChatInterface({ sessionId }) {
 
 
   return (
-    <div className="flex-1 flex flex-col relative">
+    <div className="flex-1 flex flex-col relative h-full">
       <div className="mystical-bg" />
-      <div className="p-4">
+      <div className="p-4 flex-shrink-0">
         <h2 className="font-accent text-xl text-ethereal-gold">{sessionTitle}</h2>
       </div>
       <div
-        className="flex-1 overflow-auto p-4 space-y-2"
+        className="flex-1 overflow-y-auto p-4 space-y-2 min-h-0"
         ref={chatContainerRef}
         onScroll={handleScroll}
       >
