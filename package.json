@@ -1,0 +1,11 @@
+{
+  "name": "djinn",
+  "private": true,
+  "devDependencies": {
+    "concurrently": "^7.6.0"
+  },
+  "scripts": {
+    "postinstall": "npm install --prefix backend && npm install --prefix frontend",
+    "dev": "concurrently \"npm --prefix backend run dev\" \"npm --prefix frontend run dev\""
+  }
+}
