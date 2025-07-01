@@ -44,16 +44,15 @@ export default function SessionList() {
   };
 
   return (
-    <div className="p-4 flex flex-col h-full">
-      <div className="flex items-center justify-between mb-4">
-        <h2 className="text-xl font-semibold">Sessions</h2>
-        <button onClick={handleNew} className="text-blue-600 hover:underline">
-          + New
+    <div className="p-4 flex flex-col h-full space-y-4">
+      <div className="p-6">
+        <button onClick={handleNew} className="liquid-button w-full p-4 text-deep-earth font-medium">
+          ✨ New Manifestation
         </button>
       </div>
-      <ul className="overflow-auto flex-1">
+      <ul className="overflow-auto flex-1 space-y-2">
         {sessions.map((session) => (
-          <li key={session.id} className="mb-2">
+          <li key={session.id} className="">
             <SessionItem session={session} onDelete={handleDelete} />
           </li>
         ))}
